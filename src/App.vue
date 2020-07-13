@@ -16,7 +16,7 @@ const routes = {
   '/orders': Table
 };
 
-const url = 'http://localhost:8000/orders';
+const url = 'https://gotestapi.herokuapp.com/orders';
 export default {
   name: 'DatatablePage',
   components:{
