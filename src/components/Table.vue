@@ -4,7 +4,7 @@
             <span class="search" >Search</span>
          <input class="form-control" v-model="filters.name.value" /> 
          </div>
-          <p >Total Amount: {{theData.data.length}}</p>
+       <p> Total Amount: ${{total}}</p>
       <v-table
       class="table"
         :data="theData.data"
@@ -44,10 +44,29 @@ props:['theData','config'],
   data: () => ({
     currentPage: 1,
     totalPages: 0,
+    total: 0,
+    start:null,
+    end:null,
     filters: {
-      name: { value: '', keys: ['product','order_name'] }
+      name: { value: '', keys: ['order_name'] },
+    date:{value: '', keys: ['create_time']},
     }
-  })
+  }),
+  mounted(){
+for(let i=0;i<this.theData.data.length;i++){
+    this.total=this.total+this.theData.data[i].total_amount
+}
+console.log(this.filters.date.value)
+  },
+  methods: {
+    update(values) {
+      this.$router.push({ query: Object.assign({}, this.$route.query, {
+        to: values.to,
+        from: values.from,
+        panel: values.panel
+      }) })
+    }
+  }
 }
   </script>
 
@@ -56,11 +75,17 @@ props:['theData','config'],
    font-size: 20px;
    margin-right:20px;
 }
+.mb-2{
+   margin-left:80px;
+}
 .table{
     font-size: 11px;
 }
 .pagination{
     margin-left: 30%;
     margin-top:10px;
+}
+.range{
+    width:100%
 }
   </style>

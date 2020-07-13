@@ -12,14 +12,19 @@
 
 <script>
 import Table from './components/Table'
+const routes = {
+  '/orders': Table
+};
+
 const url = 'http://localhost:8000/orders';
 export default {
   name: 'DatatablePage',
   components:{
-    Table,
+    Table
   },
   data:()=>({
     tableData:undefined,
+     currentRoute: window.location.pathname,
     config:[
       {
         key:'order_name',
@@ -51,7 +56,7 @@ export default {
         title:'Total Amount',
         type:'number'
       },
-    ]
+    ],
   }),
   mounted() {
     this.$axios.get(url)
@@ -64,7 +69,13 @@ export default {
         this.errored = true
       })
       .finally(() => this.loading = false)
-  }
+  },
+  computed: {
+    ViewComponent () {
+      return routes[this.currentRoute] 
+    }
+  },
+  render (h) { return h(this.ViewComponent) }
   }
 
 </script>

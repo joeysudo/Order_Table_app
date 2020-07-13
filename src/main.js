@@ -8,11 +8,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import SmartTable from 'vuejs-smart-table'
 
 
+
+
+
 Vue.prototype.$axios=axios
 Vue.config.productionTip = false
 Vue.use(SmartTable)
 Vue.use(BootstrapVue)
 new Vue({
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')
 
