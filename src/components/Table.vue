@@ -4,6 +4,12 @@
             <span class="search" >Search</span>
          <input class="form-control" v-model="filters.name.value" /> 
          </div>
+         <div class="input-group mb-3">
+            <span class="searchdate" >Date</span>
+        <date-range-picker class="form-control"  v-model="filters.range" />
+         </div>
+          
+          
        <p> Total Amount: ${{total}}</p>
       <v-table
       class="table"
@@ -49,8 +55,10 @@ props:['theData','config'],
     end:null,
     filters: {
       name: { value: '', keys: ['order_name'] },
-    date:{value: '', keys: ['create_time']},
-    }
+      range: {
+    start:{value: '', keys: ['create_time']},
+      end:{value: '', keys: ['create_time']}}
+    },
   }),
   mounted(){
 for(let i=0;i<this.theData.data.length;i++){
@@ -87,5 +95,9 @@ console.log(this.filters.date.value)
 }
 .range{
     width:100%
+}
+.searchdate{
+    margin-left: 20px;
+    margin-right:20px;
 }
   </style>
