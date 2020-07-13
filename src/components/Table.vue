@@ -1,42 +1,64 @@
 <template>
-    <table>
-        <thead>
-            <tr>
-                <th v-for="(obj,ind) in config" :key="ind">{{obj.title}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(row,index) in theData.data" :key="index">
-                <td v-for="(obj,ind) in config" :key="ind">{{row[obj.key]}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="overflow-auto">
+    <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search"/>
+    <b-table id="my-table"
+      :items="theData.data"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :fields="fields"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      responsive="sm"
+      small>
+    </b-table>
+    <div class="pagination">
+ <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      :align="center"
+      aria-controls="my-table"
+    ></b-pagination>
+    <span class="mt-3">Total: {{ theData.data.length }}</span>
+</div>
+</div>
 </template>
 
 <script>
+
 export default {
-props:['theData','config']
+props:['theData','config'],
+data(){
+    return{
+        perPage: 5,
+        currentPage: 1,
+        sortBy: 'product',
+        sortDesc: false,
+        fields: [
+         { key:'order_name', sortable: true},
+          {key:'create_time',sortable: true },
+          {key:'company_name',sortable: true },
+          {key:'customer_name',sortable: true },
+          { key: 'product', sortable: true },
+          { key: 'delivered_amount', sortable: true },
+          { key: 'total_amount', sortable: true }
+        ],
+    }
+},
+computed: {
+      rows() {
+        return this.theData.data.length
+      }
+    }
 }
   </script>
 
   <style lang="scss">
-   table {
-        border-collapse: collapse;
-        width: 100.1%;
-        th {
-            position: sticky;
-            top: 0;
-            background: #ccc;
-            padding: 10px 5px;
-            text-align: left;
-            border-bottom: 1px solid #999;
-        }
-        
-        td {
-            padding: 5px 5px;
-            text-align: left;
-        }
-    }
-
+.pagination{
+    margin-left: 20%;
+}
+.mt-3{
+    margin-left: 5%;
+}
 
   </style>

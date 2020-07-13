@@ -8,6 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.prototype.$axios=axios
 Vue.config.productionTip = false
+
 Vue.use(BootstrapVue)
 new Vue({
   render: h => h(App),

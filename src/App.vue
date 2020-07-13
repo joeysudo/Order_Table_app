@@ -1,40 +1,28 @@
 <template>
   <div id="app">
-<Table v-if="tableData" :theData="tableData" :config="config" :style="{height: '600px'}"/>
+    <main>
+
+    <Table 
+      v-if="tableData" 
+      :theData="tableData" 
+      :config="config" :style="{height: '350px'}"
+      />
+    </main>
   </div>
 </template>
 
 <script>
 import Table from './components/Table'
+
 const url = 'http://localhost:8000/orders';
 export default {
+  name: 'DatatablePage',
   components:{
-    Table
+    Table,
+
   },
   data:()=>({
     tableData:undefined,
-    config:[
-      {
-        key:'order_name',
-        title:'Order Name'
-      },
-      {
-        key:'create_time',
-        title:'Create Time'
-      },
-        {
-        key:'product',
-        title:'Product'
-      },
-      {
-        key:'delivered_amount',
-        title:'Delivered Amount'
-      },
-      {
-        key:'total_amount',
-        title:'Total Amount'
-      },
-    ]
   }),
   mounted() {
     this.$axios.get(url)
@@ -53,5 +41,17 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: Helvetica, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+main {
+  margin: 30px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 </style>
