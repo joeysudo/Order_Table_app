@@ -12,7 +12,8 @@
     "core-js": "^3.6.4",
     "mdbvue": "^6.7.1",
     "vue": "^2.6.11",
-    "vue-good-table": "^2.19.5"
+    "vue-good-table": "^2.19.5",
+    "vuejs-smart-table": "0.0.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",

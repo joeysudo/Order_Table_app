@@ -1,64 +1,66 @@
 <template>
-<div class="overflow-auto">
-    <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search"/>
-    <b-table id="my-table"
-      :items="theData.data"
-      :per-page="perPage"
-      :current-page="currentPage"
-      :fields="fields"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      responsive="sm"
-      small>
-    </b-table>
-    <div class="pagination">
- <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      :align="center"
-      aria-controls="my-table"
-    ></b-pagination>
-    <span class="mt-3">Total: {{ theData.data.length }}</span>
-</div>
-</div>
+<div>
+        <div class="input-group mb-3">
+            <span class="search" >Search</span>
+         <input class="form-control" v-model="filters.name.value" /> 
+         </div>
+          <p >Total Amount: {{theData.data.length}}</p>
+      <v-table
+      class="table"
+        :data="theData.data"
+        :currentPage.sync="currentPage"
+        :pageSize="5"
+        :filters="filters"
+        @totalPagesChanged="totalPages = $event"
+      >
+        <thead slot="head">
+          <v-th sortKey="order_name">Order Name</v-th>
+          <v-th sortKey="company_name">Customer Company</v-th>
+          <v-th sortKey="customer_name">Customer Name</v-th>
+          <v-th sortKey="create_time">Create Time</v-th>
+          <v-th sortKey="delivered_amount">Delivered Amount</v-th>
+          <v-th sortKey="total_amount">Toal Amount</v-th>
+        </thead>
+        <tbody slot="body" slot-scope="{displayData}">
+        <tr v-for="row in displayData" :key="row.guid">
+          <td v-for="(obj,ind) in config" :key="ind">{{ row[obj.key] }}</td>
+        </tr>
+        </tbody>
+      </v-table>
+    <div class="pagination pagination-sm">
+      <smart-pagination
+        :currentPage.sync="currentPage"
+        :totalPages="totalPages"
+      />
+      </div>
+    </div>
 </template>
 
 <script>
 
 export default {
 props:['theData','config'],
-data(){
-    return{
-        perPage: 5,
-        currentPage: 1,
-        sortBy: 'product',
-        sortDesc: false,
-        fields: [
-         { key:'order_name', sortable: true},
-          {key:'create_time',sortable: true },
-          {key:'company_name',sortable: true },
-          {key:'customer_name',sortable: true },
-          { key: 'product', sortable: true },
-          { key: 'delivered_amount', sortable: true },
-          { key: 'total_amount', sortable: true }
-        ],
+ name: 'Pagination',
+  data: () => ({
+    currentPage: 1,
+    totalPages: 0,
+    filters: {
+      name: { value: '', keys: ['product','order_name'] }
     }
-},
-computed: {
-      rows() {
-        return this.theData.data.length
-      }
-    }
+  })
 }
   </script>
 
   <style lang="scss">
+.search{
+   font-size: 20px;
+   margin-right:20px;
+}
+.table{
+    font-size: 11px;
+}
 .pagination{
-    margin-left: 20%;
+    margin-left: 30%;
+    margin-top:10px;
 }
-.mt-3{
-    margin-left: 5%;
-}
-
   </style>
