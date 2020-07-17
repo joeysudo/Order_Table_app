@@ -6,10 +6,8 @@
          </div>
          <div class="input-group mb-3">
             <span class="searchdate" >Date</span>
-        <date-range-picker class="form-control"  v-model="filters.range" />
+           <input type="date" v-model="filters.date.value">
          </div>
-          
-          
        <p> Total Amount: ${{total}}</p>
       <v-table
       class="table"
@@ -17,6 +15,7 @@
         :currentPage.sync="currentPage"
         :pageSize="5"
         :filters="filters"
+        :custom-filter="customFilter"
         @totalPagesChanged="totalPages = $event"
       >
         <thead slot="head">
@@ -30,7 +29,7 @@
         <tbody slot="body" slot-scope="{displayData}">
         <tr v-for="row in displayData" :key="row.guid">
           <td v-for="(obj,ind) in config" :key="ind">{{ row[obj.key] }}</td>
-        </tr>
+          </tr>
         </tbody>
       </v-table>
     <div class="pagination pagination-sm">
@@ -51,30 +50,21 @@ props:['theData','config'],
     currentPage: 1,
     totalPages: 0,
     total: 0,
-    start:null,
-    end:null,
     filters: {
       name: { value: '', keys: ['order_name'] },
-      range: {
-    start:{value: '', keys: ['create_time']},
-      end:{value: '', keys: ['create_time']}}
-    },
+      date:{ value: '', keys: ['create_time'] }
+  }
   }),
   mounted(){
 for(let i=0;i<this.theData.data.length;i++){
     this.total=this.total+this.theData.data[i].total_amount
 }
-console.log(this.filters.date.value)
   },
-  methods: {
-    update(values) {
-      this.$router.push({ query: Object.assign({}, this.$route.query, {
-        to: values.to,
-        from: values.from,
-        panel: values.panel
-      }) })
+   methods: {
+    dateFilter (filterValue, row) {
+      return row.satrt_date >= filterValue.satrt_date && row.end_date <= filterValue.end_date
     }
-  }
+   }
 }
   </script>
 
@@ -97,7 +87,7 @@ console.log(this.filters.date.value)
     width:100%
 }
 .searchdate{
-    margin-left: 20px;
+    margin-left: 25px;
     margin-right:20px;
 }
   </style>
