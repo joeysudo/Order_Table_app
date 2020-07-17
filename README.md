@@ -15,6 +15,7 @@ npm install
 ```
 npm run serve
 ```
+application would run at http://localhost:8080
 ### Styling Libraries
 
 - Boostrap4 Vue - [source](https://getbootstrap.com/)
