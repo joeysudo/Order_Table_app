@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@angular/core": "^10.0.3",
+    "@angular/core": "^11.0.5",
     "@gravitano/vue-date-range-picker": "^0.1.9",
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.4",
