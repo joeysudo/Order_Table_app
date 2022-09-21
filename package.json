@@ -22,7 +22,7 @@
     "vue-mj-daterangepicker": "^0.1.11",
     "vue2-daterange-picker": "^0.5.1",
     "vuejs-smart-table": "0.0.5",
-    "vuetify": "^2.2.11",
+    "vuetify": "^2.6.10",
     "vuetify-daterange-picker": "^3.2.0"
   },
   "devDependencies": {
